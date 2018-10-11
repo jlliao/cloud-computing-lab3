@@ -31,6 +31,7 @@ def pronoun_in_tweet(clientid=None):
         'denna': 0,
         'denne': 0,
         'hen': 0,
+        'total': 0
     }
 
     for filename in os.listdir('data'):
@@ -52,6 +53,7 @@ def scan_data(filename):
             'denna': 0,
             'denne': 0,
             'hen': 0,
+            'total': 0,
         }
 
         for line in f:
@@ -59,6 +61,7 @@ def scan_data(filename):
                 tweet_obj = json.loads(line)
                 if not tweet_obj['retweeted']: # ignore retweets
                     pronoun_line = count_pronoun(tweet_obj['text'])
+                    pronoun_file['total'] += 1 # total plus one
                     for key, value in pronoun_line.items():
                         pronoun_file[key] += value
     
