@@ -1,4 +1,4 @@
-### Cloud Computing Assignment III
+# Cloud Computing Assignment III
 
 Please check the GitHub link to the project: (https://github.com/jlliao/cloud-computing-lab3)
 - [Task 1](#task-1)
@@ -49,6 +49,7 @@ def runtask():
 ```
 
 ###The Web Frontend
+
 The index.html page contains three elements: a button that sends an AJAX request to `/runtask`, a div that displays the result of the task and a data visualization at the end using `chart-js`. The socket.io.js library (served by our Node.js app) is included for the notifier, so it will subscribe to two events, register and notify, and include the client ID in the POST request that the button click triggers.
 
 ```html
@@ -123,6 +124,7 @@ The index.html page contains three elements: a button that sends an AJAX request
 </html>
 ```
 ###The Background Worker 
+
 For the background worker,  I employed the Celery. It defines a task that count the pronoun of all tweets in the data by scaning each .json file line by line. I used RabbitMQ as a message broker to transport jobs between the web server and the background worker. I also subclass the Celery’s Task class so that it calls our notifier service when the task completes.
 
 ```python
@@ -224,6 +226,7 @@ def count_occurences(str, word):
 ```
 
 ###The Notifier
+
 This is a minimal Node.js + Express + Socket.IO app with a single POST endpoint `/notify`. This is to notify the result when the task is finished.
 
 ```javascript
@@ -334,6 +337,7 @@ If we check our terminal, indeed the celery worker in our instance has processed
 ![Alt text](./images/terminal-result.png)
 
 ### Contextualization
+
 To automate the process of contextualizing the remote instance, I have coded a cloud-config.txt. Because I have already dockerized my solution in task 1, the cloud-config text document is much simpler. 
 
 ```
