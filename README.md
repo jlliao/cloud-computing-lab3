@@ -48,7 +48,7 @@ def runtask():
     return 'running task...', 202
 ```
 
-###The Web Frontend
+### The Web Frontend
 
 The index.html page contains three elements: a button that sends an AJAX request to `/runtask`, a div that displays the result of the task and a data visualization at the end using `chart-js`. The socket.io.js library (served by our Node.js app) is included for the notifier, so it will subscribe to two events, register and notify, and include the client ID in the POST request that the button click triggers.
 
@@ -123,7 +123,7 @@ The index.html page contains three elements: a button that sends an AJAX request
 </body>
 </html>
 ```
-###The Background Worker 
+### The Background Worker 
 
 For the background worker,  I employed the Celery. It defines a task that count the pronoun of all tweets in the data by scaning each .json file line by line. I used RabbitMQ as a message broker to transport jobs between the web server and the background worker. I also subclass the Celery’s Task class so that it calls our notifier service when the task completes.
 
@@ -225,7 +225,7 @@ def count_occurences(str, word):
     return count
 ```
 
-###The Notifier
+### The Notifier
 
 This is a minimal Node.js + Express + Socket.IO app with a single POST endpoint `/notify`. This is to notify the result when the task is finished.
 
@@ -256,7 +256,7 @@ server.listen(3000);
 ```
 When the client first connects to the notifier service, it echos their Socket.IO identifier back to them. The client later passes this string along with requests it makes to the server, which forwards it along to the background worker. When the background worker completes a task, it calls the `/notify` endpoint with the client ID as a POST parameter. The notifier service thens find the appropriate client to send the task result back to.
 
-###Dockerization and Final Result
+### Dockerization and Final Result
 
 I have dockerized the solution for the future deployement. First I have immortalized the project’s dependencies in requirements.txt (for Python / pip) and package.json (for Node.js / npm) files.
 ```
