@@ -1,0 +1,21 @@
+#cloud-config
+
+apt_update: true
+apt_upgrade: true
+packages:
+ - rabbitmq-server
+ - python-pip
+ - python-dev
+ - build-essential
+ - docker-ce
+byobu_default: system 
+
+runcmd:
+ - echo "export PATH=$PATH:/usr/games" >> /home/ubuntu/.bashrc  
+ - source /home/ubuntu/.bashrc
+ - git clone https://github.com/jlliao/cloud-computing-lab3
+ - docker build --tag=mminer/myserver --file=dockerfiles/Dockerfile.server .
+ - docker build --tag=mminer/myworker --file=dockerfiles/Dockerfile.worker .
+ - docker build --tag=mminer/mynotifier --file=dockerfiles/Dockerfile.notifier .
+ - cd /home/ubuntu/cloud-computing-lab3
+ - docker-compose up

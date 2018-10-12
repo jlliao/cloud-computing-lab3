@@ -1,3 +1,4 @@
+# Dockerfile.notifier
 FROM node:8.9-onbuild
 EXPOSE 3000
 CMD ["node", "notifier.js"]
